@@ -4,7 +4,7 @@
    ========================================================================== */
 
 // The LocalStorage key where all book data is saved as a JSON string.
-const STORAGE_KEY = 'libraryBooks';
+const STORAGE_KEY = libraryBooks';
 
 // The in-memory array of book objects. This is what the app actually
 // works with; LocalStorage is just where it gets saved for next time.
