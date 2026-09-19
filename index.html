@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="logo">📚 Library Management System</h1>
+      <p class="tagline">Software Engineering &mdash; Assignment 01</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ============ DASHBOARD CARDS ============ -->
+    <section class="dashboard" aria-labelledby="dashboard-heading">
+      <h2 id="dashboard-heading" class="section-title">Dashboard</h2>
+
+      <div class="cards">
+        <article class="card card-total">
+          <p class="card-label">Total Books</p>
+          <p class="card-value" id="statTotal">0</p>
+        </article>
+
+        <article class="card card-available">
+          <p class="card-label">Available Books</p>
+          <p class="card-value" id="statAvailable">0</p>
+        </article>
+
+        <article class="card card-issued">
+          <p class="card-label">Issued Books</p>
+          <p class="card-value" id="statIssued">0</p>
+        </article>
+
+        <article class="card card-categories">
+          <p class="card-label">Total Categories</p>
+          <p class="card-value" id="statCategories">0</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ ADD / UPDATE BOOK FORM ============ -->
+    <section class="panel" aria-labelledby="form-heading">
+      <h2 id="formTitle" class="section-title">Add Book</h2>
+
+      <form id="bookForm" novalidate>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="bookId">Book ID</label>
+            <input type="text" id="bookId" name="bookId" placeholder="e.g. B006" autocomplete="off">
+            <span class="error-msg" id="errId"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="bookTitle">Book Title</label>
+            <input type="text" id="bookTitle" name="bookTitle" placeholder="e.g. Clean Code" autocomplete="off">
+            <span class="error-msg" id="errTitle"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="bookAuthor">Author</label>
+            <input type="text" id="bookAuthor" name="bookAuthor" placeholder="e.g. Robert C. Martin" autocomplete="off">
+            <span class="error-msg" id="errAuthor"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="bookCategory">Category</label>
+            <input type="text" id="bookCategory" name="bookCategory" list="categoryOptions" placeholder="e.g. Programming" autocomplete="off">
+            <datalist id="categoryOptions">
+              <option value="Programming"></option>
+              <option value="Database"></option>
+              <option value="Software Engineering"></option>
+              <option value="Mathematics"></option>
+              <option value="Fiction"></option>
+            </datalist>
+            <span class="error-msg" id="errCategory"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="bookYear">Publication Year</label>
+            <input type="number" id="bookYear" name="bookYear" placeholder="e.g. 2008" min="1000" max="2100">
+            <span class="error-msg" id="errYear"></span>
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Add Book</button>
+          <button type="button" class="btn btn-secondary" id="cancelBtn" hidden>Cancel</button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- ============ SEARCH AND FILTER ============ -->
+    <section class="panel" aria-labelledby="search-heading">
+      <h2 id="search-heading" class="section-title">Search &amp; Filter</h2>
+
+      <div class="filter-bar">
+
+        <div class="form-group filter-search">
+          <label for="searchInput">Search</label>
+          <input type="search" id="searchInput" placeholder="Search by ID, title, author or category..." autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="statusFilter">Status</label>
+          <select id="statusFilter">
+            <option value="All">All</option>
+            <option value="Available">Available</option>
+            <option value="Issued">Issued</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="categoryFilter">Category</label>
+          <select id="categoryFilter">
+            <option value="All">All Categories</option>
+          </select>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ BOOK RECORDS TABLE ============ -->
+    <section class="panel" aria-labelledby="records-heading">
+      <h2 id="records-heading" class="section-title">Book Records</h2>
+
+      <div class="table-wrapper">
+        <table class="books-table">
+          <thead>
+            <tr>
+              <th scope="col">Book ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Category</th>
+              <th scope="col">Year</th>
+              <th scope="col">Status</th>
+              <th scope="col">Borrower</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="booksTableBody">
+            <!-- Rows are generated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <p class="empty-message" id="emptyMessage" hidden>No books found.</p>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>Library Management System &mdash; Built with HTML, CSS and JavaScript</p>
+    </div>
+  </footer>
+
+  <!-- ============ ISSUE BOOK MODAL ============ -->
+  <div class="modal-overlay" id="issueModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+      <h3 id="modal-heading">Issue Book</h3>
+      <p class="modal-text">Issuing: <strong id="modalBookTitle"></strong></p>
+
+      <div class="form-group">
+        <label for="borrowerName">Borrower / Student Name</label>
+        <input type="text" id="borrowerName" placeholder="e.g. Ali Ahmed" autocomplete="off">
+        <span class="error-msg" id="errBorrower"></span>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-primary" id="confirmIssueBtn">Confirm Issue</button>
+        <button type="button" class="btn btn-secondary" id="cancelIssueBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TOAST NOTIFICATIONS ============ -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

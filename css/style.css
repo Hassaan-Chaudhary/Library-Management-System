@@ -1,0 +1,649 @@
+/* ==========================================================================
+   LIBRARY MANAGEMENT SYSTEM — STYLESHEET
+   Software Engineering, Assignment 01
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS VARIABLES (Design Tokens)
+   Saare colours aur spacing ek jagah. Theme change karna ho to sirf yahan
+   value badalni padegi, poori file me dhoondhna nahi padega.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Brand colours */
+  --navy-900: #0f172a;
+  --navy-800: #1e293b;
+  --navy-700: #334155;
+  --indigo-600: #4f46e5;
+  --indigo-700: #4338ca;
+  --indigo-50: #eef2ff;
+
+  /* Status colours */
+  --green-600: #059669;
+  --green-50: #ecfdf5;
+  --amber-600: #d97706;
+  --amber-50: #fffbeb;
+  --red-600: #dc2626;
+  --red-700: #b91c1c;
+  --red-50: #fef2f2;
+
+  /* Neutrals */
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --white: #ffffff;
+
+  /* Spacing scale */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+
+  /* Shape and depth */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.16);
+
+  /* Typography */
+  --font-body: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET AND BASE
+   Browser ki default margins hata kar sab browsers me same look milta hai.
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--navy-800);
+  background-color: var(--gray-100);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+main.container {
+  flex: 1;
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+
+/* --------------------------------------------------------------------------
+   3. HEADER
+   -------------------------------------------------------------------------- */
+.site-header {
+  background: linear-gradient(135deg, var(--navy-900) 0%, var(--indigo-700) 100%);
+  color: var(--white);
+  padding: var(--space-lg) 0;
+  box-shadow: var(--shadow-md);
+}
+
+.header-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  font-size: 0.875rem;
+  color: var(--gray-300);
+}
+
+/* --------------------------------------------------------------------------
+   4. SECTION TITLES
+   -------------------------------------------------------------------------- */
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--navy-800);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+/* --------------------------------------------------------------------------
+   5. DASHBOARD CARDS
+   CSS Grid use kiya hai. auto-fit + minmax ka matlab: jitne cards screen
+   par fit ho sakte hain, utne ek row me aayenge, baaki neeche chale jayenge.
+   Isi ek line se responsive behaviour mil jata hai.
+   -------------------------------------------------------------------------- */
+.dashboard {
+  margin-bottom: var(--space-xl);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-left: 4px solid var(--gray-300);
+  border-radius: var(--radius);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray-500);
+  margin-bottom: var(--space-xs);
+}
+
+.card-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--navy-900);
+}
+
+/* Har card ka apna accent colour */
+.card-total      { border-left-color: var(--indigo-600); }
+.card-available  { border-left-color: var(--green-600); }
+.card-issued     { border-left-color: var(--amber-600); }
+.card-categories { border-left-color: var(--navy-700); }
+
+.card-total .card-value      { color: var(--indigo-600); }
+.card-available .card-value  { color: var(--green-600); }
+.card-issued .card-value     { color: var(--amber-600); }
+.card-categories .card-value { color: var(--navy-700); }
+
+/* --------------------------------------------------------------------------
+   6. PANELS (white content boxes)
+   -------------------------------------------------------------------------- */
+.panel {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --------------------------------------------------------------------------
+   7. FORMS
+   -------------------------------------------------------------------------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 0.35rem;
+}
+
+.form-group input,
+.form-group select {
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--navy-800);
+  background: var(--white);
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input::placeholder {
+  color: #94a3b8;
+}
+
+/* Focus ring — keyboard users ko saaf dikhta hai kahan hain */
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--indigo-600);
+  box-shadow: 0 0 0 3px var(--indigo-50);
+}
+
+/* Validation fail hone par JavaScript ye class lagata hai */
+.form-group input.invalid {
+  border-color: var(--red-600);
+}
+
+.form-group input.invalid:focus {
+  box-shadow: 0 0 0 3px var(--red-50);
+}
+
+.error-msg {
+  display: block;
+  min-height: 1.1rem;
+  font-size: 0.78rem;
+  color: var(--red-600);
+  margin-top: 0.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. BUTTONS
+   -------------------------------------------------------------------------- */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--indigo-50);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--indigo-600);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--indigo-700);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--gray-600);
+  border-color: var(--gray-300);
+}
+
+.btn-secondary:hover {
+  background: var(--gray-100);
+  color: var(--navy-800);
+}
+
+/* Table ke andar chhote action buttons */
+.btn-sm {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-sm:active { transform: translateY(1px); }
+
+.btn-edit   { background: var(--indigo-50); color: var(--indigo-700); }
+.btn-edit:hover { background: #dfe3ff; }
+
+.btn-delete { background: var(--red-50); color: var(--red-700); }
+.btn-delete:hover { background: #fee2e2; }
+
+.btn-issue  { background: var(--amber-50); color: var(--amber-600); }
+.btn-issue:hover { background: #fef3c7; }
+
+.btn-return { background: var(--green-50); color: var(--green-600); }
+.btn-return:hover { background: #d1fae5; }
+
+/* --------------------------------------------------------------------------
+   9. SEARCH AND FILTER BAR
+   -------------------------------------------------------------------------- */
+.filter-bar {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-md);
+  align-items: end;
+}
+
+/* --------------------------------------------------------------------------
+   10. BOOKS TABLE
+   table-wrapper chhoti screen par horizontal scroll deta hai taake table
+   toote nahi aur poora page side me na khisak jaye.
+   -------------------------------------------------------------------------- */
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+}
+
+.books-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.books-table thead {
+  background: var(--gray-50);
+}
+
+.books-table th {
+  text-align: left;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-500);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 2px solid var(--gray-200);
+  white-space: nowrap;
+}
+
+.books-table td {
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--gray-200);
+  vertical-align: middle;
+}
+
+.books-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.books-table tbody tr {
+  transition: background-color 0.12s ease;
+}
+
+.books-table tbody tr:hover {
+  background: var(--gray-50);
+}
+
+.books-table .col-id {
+  font-weight: 600;
+  color: var(--indigo-700);
+  white-space: nowrap;
+}
+
+.books-table .col-title {
+  font-weight: 600;
+}
+
+.text-muted {
+  color: #94a3b8;
+}
+
+/* Status badges */
+.badge {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badge-available {
+  background: var(--green-50);
+  color: var(--green-600);
+}
+
+.badge-issued {
+  background: var(--amber-50);
+  color: var(--amber-600);
+}
+
+/* Action buttons cell */
+.actions-cell {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.empty-message {
+  text-align: center;
+  color: var(--gray-500);
+  font-size: 0.92rem;
+  padding: var(--space-xl) var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   11. MODAL (Issue Book dialog)
+   position: fixed poori screen ko cover karta hai. z-index isay sab ke
+   upar rakhta hai.
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  z-index: 1000;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: var(--space-xl);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.2s ease-out;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.modal-text {
+  font-size: 0.88rem;
+  color: var(--gray-600);
+  margin-bottom: var(--space-md);
+}
+
+.modal .form-group {
+  margin-bottom: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   12. TOAST NOTIFICATIONS
+   Screen ke upar-dayein taraf messages. alert() se behtar kyunki page
+   block nahi hota aur khud gayab ho jate hain.
+   -------------------------------------------------------------------------- */
+.toast-container {
+  position: fixed;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  z-index: 1100;
+  pointer-events: none;
+}
+
+.toast {
+  min-width: 260px;
+  max-width: 340px;
+  background: var(--white);
+  border-left: 4px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.88rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  animation: toastIn 0.25s ease-out;
+}
+
+.toast-success {
+  border-left-color: var(--green-600);
+  color: #065f46;
+}
+
+.toast-error {
+  border-left-color: var(--red-600);
+  color: var(--red-700);
+}
+
+.toast-info {
+  border-left-color: var(--indigo-600);
+  color: var(--indigo-700);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(110%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.toast.toast-out {
+  animation: toastOut 0.25s ease-in forwards;
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(110%); }
+}
+
+/* --------------------------------------------------------------------------
+   13. FOOTER
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background: var(--navy-900);
+  color: var(--gray-300);
+  text-align: center;
+  padding: var(--space-lg) 0;
+  font-size: 0.84rem;
+}
+
+/* --------------------------------------------------------------------------
+   14. RESPONSIVE DESIGN
+   Media queries: screen chhoti hone par layout adjust hota hai.
+   -------------------------------------------------------------------------- */
+
+/* Tablet */
+@media (max-width: 860px) {
+  .filter-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filter-search {
+    grid-column: 1 / -1;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card-value {
+    font-size: 1.8rem;
+  }
+
+  .panel {
+    padding: var(--space-md);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions .btn {
+    flex: 1;
+  }
+
+  .toast-container {
+    top: auto;
+    bottom: var(--space-md);
+    left: var(--space-md);
+    right: var(--space-md);
+  }
+
+  .toast {
+    min-width: 0;
+    max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   15. PRINT (report screenshots ke liye useful)
+   -------------------------------------------------------------------------- */
+@media print {
+  .site-header,
+  .site-footer,
+  .toast-container,
+  .actions-cell {
+    display: none;
+  }
+
+  body {
+    background: var(--white);
+  }
+}
